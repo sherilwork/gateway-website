@@ -1,8 +1,7 @@
 /**
  * Shared lead validation.
  *
- * Used by the contact form for instant feedback AND re-run on the server so
- * client-side validation is never trusted on its own.
+ * Used by the contact form for instant feedback before submission.
  */
 
 export type LeadPayload = {

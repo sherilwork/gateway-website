@@ -35,7 +35,6 @@ npm run dev        # http://localhost:3000
 
 ```
 app/                     Routes (one folder per page) + SEO routes
-  api/leads/             Server-side lead capture endpoint
   layout.tsx             Root shell: fonts, header, footer, toast provider
   sitemap.ts robots.ts   Generated SEO routes
 components/
@@ -65,19 +64,11 @@ products, pricing tiers and FAQs without touching components.
 
 ## Contact form / lead capture
 
-- `components/ContactForm.tsx` validates client-side for fast feedback.
-- `app/api/leads/route.ts` **re-validates on the server** (client validation is never
-  trusted) and includes a honeypot field for basic bot filtering.
-- Delivery is a **clearly-marked placeholder**: set `LEAD_WEBHOOK_URL` to forward leads
-  to your CRM/email/automation provider. Until then, validated leads are logged
-  server-side so nothing is silently lost.
-
-Copy `.env.example` to `.env.local` and set the values you need:
-
-```
-NEXT_PUBLIC_SITE_URL=https://saas.webwrite.in
-LEAD_WEBHOOK_URL=
-```
+- `components/ContactForm.tsx` validates client-side and shows the success state —
+  **no backend, API route, webhook or network request is involved**.
+- The site is a **frontend-only marketing website**: no environment variables,
+  no database, no authentication and no server integration are required to build
+  or deploy it.
 
 ## Content accuracy
 

@@ -99,8 +99,8 @@ export function ContactForm({ defaultIntent = "demo" }: { defaultIntent?: string
       return;
     }
 
-    // UI-only for now — no backend is connected. Simulate the request so the
-    // success flow is testable; wire up /api/leads when the backend lands.
+    // UI-only — no backend is connected. Simulate the request so the success
+    // flow is testable.
     setStatus("loading");
     window.setTimeout(() => setStatus("success"), 500);
   };
