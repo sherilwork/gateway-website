@@ -80,7 +80,7 @@ export function ContactForm({ defaultIntent = "demo" }: { defaultIntent?: string
     setErrors((current) => ({ ...current, [key]: undefined }));
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (status === "loading") return;
 
@@ -99,45 +99,10 @@ export function ContactForm({ defaultIntent = "demo" }: { defaultIntent?: string
       return;
     }
 
+    // UI-only for now — no backend is connected. Simulate the request so the
+    // success flow is testable; wire up /api/leads when the backend lands.
     setStatus("loading");
-
-    try {
-      const formData = new FormData(event.currentTarget);
-      const response = await fetch("/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...payload,
-          website: formData.get("website") ?? "",
-        }),
-      });
-
-      const data = (await response.json()) as {
-        ok: boolean;
-        message?: string;
-        errors?: LeadErrors;
-      };
-
-      if (!response.ok || !data.ok) {
-        if (data.errors) setErrors(data.errors);
-        setStatus("idle");
-        setFeedback({
-          variant: "error",
-          title: "Submission failed",
-          description: data.message ?? "Please try again in a moment.",
-        });
-        return;
-      }
-
-      setStatus("success");
-    } catch {
-      setStatus("idle");
-      setFeedback({
-        variant: "error",
-        title: "Network error",
-        description: "Please check your connection and try again.",
-      });
-    }
+    window.setTimeout(() => setStatus("success"), 500);
   };
 
   if (status === "success") {
